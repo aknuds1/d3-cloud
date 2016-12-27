@@ -1,5 +1,5 @@
 {
-  "name": "d3-cloud",
+  "name": "@arve.knudsen/d3-cloud",
   "version": "2.0.0",
   "description": "Generate word clouds in JavaScript.",
   "keywords": [
@@ -14,10 +14,14 @@
     "name": "Jason Davies",
     "url": "http://www.jasondavies.com/"
   },
+  "author": {
+    "name": "Arve Knudsen",
+    "url": "http://arveknudsen.com/"
+  },
   "license": "BSD-3-Clause",
   "repository": {
     "type": "git",
-    "url": "http://github.com/jasondavies/d3-cloud.git"
+    "url": "http://github.com/aknuds1/d3-cloud.git"
   },
   "main": "build/d3-cloud.js",
   "jsnext:main": "index",
