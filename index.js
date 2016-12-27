@@ -19,7 +19,7 @@ export default function() {
       words = [],
       timeInterval = Infinity,
       event = dispatch.dispatch("word", "end"),
-      timer = null,
+      timeoutHandle = null,
       random = Math.random,
       cloud = {},
       canvas = cloudCanvas;
@@ -46,15 +46,13 @@ export default function() {
           return d;
         }).sort(function(a, b) { return b.size - a.size; });
 
-    if (timer) clearInterval(timer);
-    timer = setInterval(step, 0);
-    step();
-
-    return cloud;
-
     function step() {
+      if (timeoutHandle != null) {
+        clearTimeout(timeoutHandle);
+      }
+
       var start = Date.now();
-      while (Date.now() - start < timeInterval && ++i < n && timer) {
+      while (Date.now() - start < timeInterval && ++i < n && timeoutHandle != null) {
         var d = data[i];
         d.x = (size[0] * (random() + .5)) >> 1;
         d.y = (size[1] * (random() + .5)) >> 1;
@@ -73,13 +71,19 @@ export default function() {
         cloud.stop();
         event.call('end', null, tags, bounds);
       }
+
+      timeoutHandle = setTimeout(step, 0);
     }
+
+    step();
+
+    return cloud;
   }
 
   cloud.stop = function() {
-    if (timer) {
-      clearInterval(timer);
-      timer = null;
+    if (timeoutHandle != null) {
+      clearTimeout(timeoutHandle);
+      timeoutHandle = null;
     }
     return cloud;
   };
